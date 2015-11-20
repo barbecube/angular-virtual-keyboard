@@ -61,8 +61,7 @@ angular.module('angular-virtual-keyboard', [])
 		'11': 'Increase keyboard size'
 	},
 	relative: true,
-	sizeAdj: true,
-	customClass: false
+	sizeAdj: true
 })
 .service('ngVirtualKeyboardService', ['VKI_CONFIG', function(VKI_CONFIG) {
 	/*globals VKI */
@@ -74,7 +73,6 @@ angular.module('angular-virtual-keyboard', [])
 			config.relative = config.relative === false ? false : VKI_CONFIG.relative;
 			config.keyCenter = config.keyCenter || VKI_CONFIG.keyCenter;
 			config.sizeAdj = config.sizeAdj === false ? false : VKI_CONFIG.sizeAdj;
-			config.customClass = config.customClass || VKI_CONFIG.customClass;
 
 			var vki = new VKI(config, VKI_CONFIG.layout, VKI_CONFIG.deadkey, inputCallback);
 			vki.attachVki(element);
@@ -113,17 +111,6 @@ angular.module('angular-virtual-keyboard', [])
 					ngModelCtrl.$setViewValue(elements[0].value);
 				});
 			});
-
-			scope.$watch('config', function(newValue, oldValue){
-				if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
-					ngVirtualKeyboardService.attach(elements[0], scope.config, function() {
-						$timeout(function() {
-							ngModelCtrl.$setViewValue(elements[0].value);
-						});
-					});
-				}
-			});
-
 		}
 	};
 }]);

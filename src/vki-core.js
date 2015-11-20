@@ -77,7 +77,6 @@ var VKI = function(customConfig, layout, deadKeys, keyInputCallback) {
   this.VKI_keyCenter = config.keyCenter || 3;
   this.VKI_forcePosition = config.forcePosition || false;
   this.VKI_relative = config.relative === false ? false : true;
-  this.VKI_customClass = config.customClass || false;
 
   this.VKI_isIE = /*@cc_on!@*/false;
   this.VKI_isIE6 = /*@if(@_jscript_version == 5.6)!@end@*/false;
@@ -188,13 +187,7 @@ var VKI = function(customConfig, layout, deadKeys, keyInputCallback) {
    *
    */
   self.attachVki = function(elem) {
-    if (elem.getAttribute("VKI_attached")) {
-      if(elem.nextSibling.className === "keyboardInputInitiator"){
-        elem.nextSibling.remove();
-      } else if(elem.previousSibling.className === "keyboardInputInitiator"){
-        elem.previousSibling.remove();
-      }
-    }
+    if (elem.getAttribute("VKI_attached")) return false;
     if (self.VKI_imageURI) {
       var keybut = document.createElement('img');
           keybut.src = self.VKI_imageURI;
@@ -285,9 +278,6 @@ var VKI = function(customConfig, layout, deadKeys, keyInputCallback) {
   this.VKI_keyboard.className = "keyboardInputMaster";
   if (this.VKI_relative) {
     self.VKI_keyboard.className += ' relativeKeyboard';
-  }
-  if (this.VKI_customClass) {
-    self.VKI_keyboard.className += ' ' + this.VKI_customClass;
   }
   this.VKI_keyboard.dir = "ltr";
   this.VKI_keyboard.cellSpacing = "0";
@@ -748,9 +738,6 @@ var VKI = function(customConfig, layout, deadKeys, keyInputCallback) {
    */
   this.VKI_insert = function(text) {
     this.VKI_target.focus();
-    if (text && text.length > 1 && text.trim) {
-      text = text.trim();
-    }
     if (this.VKI_target.maxLength) this.VKI_target.maxlength = this.VKI_target.maxLength;
     if (typeof this.VKI_target.maxlength == "undefined" ||
         this.VKI_target.maxlength < 0 ||
