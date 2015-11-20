@@ -187,7 +187,13 @@ var VKI = function(customConfig, layout, deadKeys, keyInputCallback) {
    *
    */
   self.attachVki = function(elem) {
-    if (elem.getAttribute("VKI_attached")) return false;
+    if (elem.getAttribute("VKI_attached")) {
+      if(elem.nextSibling.className === "keyboardInputInitiator"){
+        elem.nextSibling.remove();
+      } else if(elem.previousSibling.className === "keyboardInputInitiator"){
+        elem.previousSibling.remove();
+      }
+    }
     if (self.VKI_imageURI) {
       var keybut = document.createElement('img');
           keybut.src = self.VKI_imageURI;
