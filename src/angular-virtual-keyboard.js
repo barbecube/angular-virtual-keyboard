@@ -111,6 +111,17 @@ angular.module('angular-virtual-keyboard', [])
 					ngModelCtrl.$setViewValue(elements[0].value);
 				});
 			});
+
+			scope.$watch('config', function(newValue, oldValue){
+				if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
+					ngVirtualKeyboardService.attach(elements[0], scope.config, function() {
+						$timeout(function() {
+							ngModelCtrl.$setViewValue(elements[0].value);
+						});
+					});
+				}
+			});
+
 		}
 	};
 }]);
